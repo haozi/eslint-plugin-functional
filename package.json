@@ -109,13 +109,18 @@
     "rollup-plugin-typescript2": "^0.25.3",
     "shelljs": "^0.8.3",
     "ts-jest": "^24.3.0",
+    "tsutils": "^3.17.1",
     "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "eslint": "^5.0.0 || ^6.0.0",
+    "tsutils": "^3.0.0",
     "typescript": ">=3.4.1"
   },
   "peerDependenciesMeta": {
+    "tsutils": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
