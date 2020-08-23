@@ -5,14 +5,22 @@
 
 import rollupPluginCommonjs from "@rollup/plugin-commonjs";
 import rollupPluginNodeResolve from "@rollup/plugin-node-resolve";
+import rollupPluginReplace from "@rollup/plugin-replace";
 import rollupPluginTypescript from "@rollup/plugin-typescript";
-import rollupPluginJSON from "@rollup/plugin-json";
+
+import { version } from "./package.json";
 
 import {
   isAbsolute as isAbsolutePath,
   join as joinPaths,
   normalize as normalizePath,
 } from "path";
+
+const pluginConfig = {
+  replace: {
+    __buildVersion: `"${version}"`,
+  },
+};
 
 const common = {
   input: "src/index.ts",
@@ -57,10 +65,8 @@ const cjs = {
   plugins: [
     rollupPluginNodeResolve(),
     rollupPluginCommonjs(),
+    rollupPluginReplace(pluginConfig.replace),
     rollupPluginTypescript(),
-    rollupPluginJSON({
-      preferConst: true,
-    }),
   ],
 };
 
@@ -78,10 +84,8 @@ const esm = {
   plugins: [
     rollupPluginNodeResolve(),
     rollupPluginCommonjs(),
+    rollupPluginReplace(pluginConfig.replace),
     rollupPluginTypescript(),
-    rollupPluginJSON({
-      preferConst: true,
-    }),
   ],
 };
 

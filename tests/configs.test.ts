@@ -1,6 +1,7 @@
 /**
  * @file Tests for all configs except `all`.
  */
+import { Linter } from "eslint";
 
 import all from "../src/configs/all";
 import currying from "../src/configs/currying";
@@ -11,25 +12,24 @@ import noExceptions from "../src/configs/no-exceptions";
 import noObjectOrientation from "../src/configs/no-object-orientation";
 import noStatements from "../src/configs/no-statements";
 import { rules } from "../src/rules";
-import { Config } from "../src/util/misc";
 
 /**
  * Test the given config.
  */
-function testConfig(config: Config, master: Config) {
+function testConfig(config: Linter.Config, master: Linter.Config) {
   return () => {
     it("should not have any JS rules that the all config does not have", () => {
       if (config.rules) {
-        Object.keys(config.rules).every((rule) => {
-          expect(master.rules[rule]).toBeDefined();
+        Object.keys(config.rules ?? {}).every((rule) => {
+          expect(master.rules?.[rule]).toBeDefined();
         });
       }
     });
 
     it("should not have any TS rules that the all config does not have", () => {
       if (config.overrides) {
-        Object.keys(config.overrides[0].rules).every((rule) => {
-          expect(master.overrides[0].rules[rule]).toBeDefined();
+        Object.keys(config.overrides[0].rules ?? {}).every((rule) => {
+          expect(master.overrides?.[0].rules?.[rule]).toBeDefined();
         });
       }
     });
@@ -39,8 +39,8 @@ function testConfig(config: Config, master: Config) {
 describe("configs", () => {
   describe("All", () => {
     const allRules = Object.keys(rules);
-    const configJSRules = Object.keys(all.rules);
-    const configTSRules = Object.keys(all.overrides[0].rules);
+    const configJSRules = Object.keys(all.rules ?? {});
+    const configTSRules = Object.keys(all.overrides?.[0].rules ?? {});
 
     it("should have all the rules", () => {
       expect([...configJSRules, ...configTSRules]).toHaveLength(

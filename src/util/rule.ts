@@ -9,7 +9,6 @@ import {
 import { Rule } from "eslint";
 import { Type } from "typescript";
 
-import { version } from "../../package.json";
 import { shouldIgnore } from "../common/ignore-options";
 
 export type BaseOptions = object;
@@ -40,7 +39,11 @@ export type RuleFunctionsMap<
   Options extends BaseOptions
 > = {
   readonly [K in keyof TSESLint.RuleListener]: (
-    node: TSESTree.Node,
+    node: NonNullable<TSESLint.RuleListener[K]> extends TSESLint.RuleFunction<
+      infer U
+    >
+      ? U
+      : never,
     context: RuleContext<MessageIds, Options>,
     options: Options
   ) => RuleResult<MessageIds, Options>;
@@ -93,7 +96,7 @@ export function createRule<
 ): Rule.RuleModule {
   return ESLintUtils.RuleCreator(
     (name) =>
-      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${version}/docs/rules/${name}.md`
+      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${__buildVersion}/docs/rules/${name}.md`
   )({
     name,
     meta,

@@ -1,22 +1,21 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["esnext"],
-    "module": "esnext",
+    "importHelpers": false,
+    "lib": [
+      "ESNext"
+    ],
+    "module": "ESNext",
     "moduleResolution": "node",
     "newLine": "LF",
     "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "sourceMap": false,
-    "strictNullChecks": true,
-    "target": "es2018",
+    "rootDir": "./src",
+    "strict": true,
+    "target": "ES2018",
   },
-  "include": ["src/**/*.ts"]
+  "exclude": [
+    "tests/**/*"
+  ]
 }
